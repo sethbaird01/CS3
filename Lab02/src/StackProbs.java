@@ -2,7 +2,7 @@ import java.util.Stack;
 
 public class StackProbs {
     
-    public static Stack<Integer> makeStack(int[] nums) {
+    public static Stack<Integer> makeStack(int[] nums) { //prewritten code
         Stack<Integer> stack = new Stack<>();
         for (int num : nums)
         stack.push(num);
@@ -91,10 +91,41 @@ public class StackProbs {
     }
     
     public static boolean bracketBalance(String s) {
-        Stack<Character> chars = new Stack<Character>();
+        Stack<Character> parenthesis = new Stack<Character>();
+        Stack<Character> squareBrackets = new Stack<Character>();
+        Stack<Character> curlyBrackets = new Stack<Character>();
 
         for (int i = 0; i < s.length(); i++) {
-            
+        switch (s.charAt(i)) {
+            case '(':
+                parenthesis.push(s.charAt(i));
+            break;
+            case ')':
+                parenthesis.pop();
+            break;
+            case '[':
+                 squareBrackets.push(s.charAt(i));
+            break;
+            case ']':
+                squareBrackets.pop();
+            break;
+            case '{':
+                curlyBrackets.push(s.charAt(i));
+            break;
+            case '}':
+                curlyBrackets.pop();
+            break;
+
+            default:
+            System.out.println("unknown character");
+                break;
+            }
         }
+
+        if(parenthesis.size() > 0 || squareBrackets.size() > 0 || curlyBrackets.size() > 0){
+            return false;
+        }
+        return true;
+
     }
 }

@@ -19,5 +19,9 @@ public class Runner {
         System.out.println("reversevowels test");
         System.out.println(StackProbs.reverseVowels("hello").toString());
         System.out.println("");
+
+        System.out.println("bracketbalance test");
+        System.out.println(StackProbs.bracketBalance("[()[]()]()"));
+        System.out.println("");
     }
 }

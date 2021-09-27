@@ -1,4 +1,4 @@
-Found a ladder! >>> [dears, fears]
+Found a ladder! >>> [dears, fears]
 Found a ladder! >>> [heart]
 Found a ladder! >>> [sail, rail, rain, ruin]
 No ladder between mikhail and jeff

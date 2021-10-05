@@ -30,19 +30,19 @@ public class GuitarHeroVisualizer {
 
                 double sample = strings[keyIndex].sample();
 
-                int n = 50; // smaller number, finer resolution
-                int m = 8500; // bigger number, longer line
-                double increment = 0.0001; // smaller number, closer dots
+                int n = 10; // smaller number, finer resolution
+                int m = 10000; // bigger number, longer line
+                double increment = 0.001; // smaller number, closer dots
 
                 // plot dot at x (always adding small increment) and y (frequency of pitch
                 // scaled to >-1, <1)
 
                 if (strings[keyIndex].time() % n == 0) {
-                    StdDraw.point(x, (0.55 + sample));
+                    StdDraw.point(x, (0.4 + (sample*0.75)));
                     x += increment;
                 }
 
-                if (strings[keyIndex].time() % (n * m) == 0) {// change (n*m) to however many increments wide the canvas
+                if (strings[keyIndex].time() % m == 0) {// change (n*m) to however many increments wide the canvas
                                                               // is
                     StdDraw.clear();
                     x = 0;

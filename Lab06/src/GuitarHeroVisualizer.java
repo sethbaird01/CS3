@@ -38,7 +38,6 @@ public class GuitarHeroVisualizer {
                 // scaled to >-1, <1)
 
                 if (strings[keyIndex].time() % n == 0) {
-                    StdDraw.setPenColor(0, 0, 0);
                     StdDraw.point(x, (0.55 + sample));
                     x += increment;
                 }

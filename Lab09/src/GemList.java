@@ -42,7 +42,7 @@ public class GemList {
 			return;
 		}
 
-		if (idx <= 0) { //edge case, clicking before the first element
+		if (idx <= 0) { // edge case, clicking before the first element
 			Node temp = this.head;
 			this.head = new Node(i);
 			this.head.next = temp;
@@ -86,6 +86,7 @@ public class GemList {
 	}
 
 	public int score() {// tested working
+		// TODO implement wild gems
 
 		if (this.head == null) {
 			return 0;
@@ -96,7 +97,11 @@ public class GemList {
 		int currMulti = 0;
 		int multiLen = 0;
 		while (current.next != null) {
-			if (current.gem.getType().equals(current.next.gem.getType())) {
+			if (
+					current.gem.getType().equals(current.next.gem.getType())
+					|| current.next.gem.getType().toString().equals("WILD")
+					|| current.gem.getType().toString().equals("WILD")) { // this statement hurts
+
 				// multiplier goes here
 				if (currMulti != 0) {// continuing multiplier, increment len and add to currMulti
 					currMulti += current.gem.getPoints();
@@ -105,7 +110,19 @@ public class GemList {
 					currMulti = current.gem.getPoints();
 					multiLen = 1;
 				}
-			} else {
+			}
+
+			else {
+
+				if (current.next.gem.getType().toString().equals("WILD")) {//may not be necessary
+					if (currMulti != 0) {// continuing multiplier, increment len and add to currMulti
+						currMulti += current.gem.getPoints();
+						multiLen++;
+					} else {// beginning multiplier, change values accordingly
+						currMulti = current.gem.getPoints();
+						multiLen = 1;
+					}
+				}
 
 				if (currMulti != 0) {// multiplier over, take currMulti * multiLen and add it to `out`
 					currMulti += current.gem.getPoints();
@@ -118,7 +135,7 @@ public class GemList {
 				}
 			}
 			current = current.next;
-		}
+		} // wloop closing
 
 		if (currMulti != 0) {// multiplier over, take currMulti * multiLen and add it to `out`
 			currMulti += current.gem.getPoints();

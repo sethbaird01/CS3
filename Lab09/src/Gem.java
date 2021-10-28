@@ -4,21 +4,30 @@ import java.awt.Color;
 import java.util.Random;
 
 enum GemType {
-	GREEN, BLUE, ORANGE; // define the different types of Gems, comma delimited
+	GREEN, BLUE, ORANGE, WILD; // define the different types of Gems, comma delimited
 }
 
-public class Gem { //tested working
+public class Gem { // tested working
 
 	private int value;
 	private GemType type;
 
 	static final int[] possibleValues = { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
 	static final Random rand = new Random();
-	static final String imageParentFolder = "/Users/seth/Documents/GitHub/CS3/Lab09/src/";
+	static final String imageParentFolder = "C:/Users/orbit/Documents/GitHub/CS3/Lab09/src/";
 
 	public Gem() {
 		this.value = possibleValues[rand.nextInt(possibleValues.length)];
-		this.type = GemType.values()[rand.nextInt(3)];
+		// wild will be spawned 1/1000
+
+		int totalProb = rand.nextInt(10);
+		boolean lucky = totalProb == 8; // any number would do here, since all numbers <=10 have the same chance
+
+		if (lucky) {
+			this.type = GemType.WILD; // picks between colored gems
+		} else {
+			this.type = GemType.values()[rand.nextInt(3)]; // picks between colored gems
+		}
 	}
 
 	public Gem(GemType type, int points) {

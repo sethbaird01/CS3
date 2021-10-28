@@ -14,11 +14,11 @@ public class Gem { // tested working
 
 	static final int[] possibleValues = { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
 	static final Random rand = new Random();
-	static final String imageParentFolder = "C:/Users/orbit/Documents/GitHub/CS3/Lab09/src/";
+	static final String imageParentFolder = "/Users/seth/Documents/GitHub/CS3/Lab09/src/"; //must have ending slash
 
 	public Gem() {
 		this.value = possibleValues[rand.nextInt(possibleValues.length)];
-		// wild will be spawned 1/1000
+		// wild will be spawned 1/10 chance
 
 		int totalProb = rand.nextInt(10);
 		boolean lucky = totalProb == 8; // any number would do here, since all numbers <=10 have the same chance

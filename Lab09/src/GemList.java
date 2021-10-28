@@ -86,7 +86,7 @@ public class GemList {
 	}
 
 	public int score() {// tested working
-		// TODO implement wild gems
+		// done: implement wild gems
 
 		if (this.head == null) {
 			return 0;
@@ -113,16 +113,6 @@ public class GemList {
 			}
 
 			else {
-
-				if (current.next.gem.getType().toString().equals("WILD")) {//may not be necessary
-					if (currMulti != 0) {// continuing multiplier, increment len and add to currMulti
-						currMulti += current.gem.getPoints();
-						multiLen++;
-					} else {// beginning multiplier, change values accordingly
-						currMulti = current.gem.getPoints();
-						multiLen = 1;
-					}
-				}
 
 				if (currMulti != 0) {// multiplier over, take currMulti * multiLen and add it to `out`
 					currMulti += current.gem.getPoints();

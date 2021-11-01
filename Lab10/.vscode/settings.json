@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "python.pythonPath": "/usr/local/bin/python3",
+    "discord.enabled": false
+}

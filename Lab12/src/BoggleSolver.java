@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
 
+
 public class BoggleSolver {
 	Dictionary d;
 	// BoggleBoard b;
@@ -25,52 +26,54 @@ public class BoggleSolver {
 		// hashset stores all words
 		set = new HashSet<String>();
 
-		findWords(board, d);
+		findWordsHelper(board, d);
 
 		// returning hashset which now has all combinations
 		return set;
 	}
 
-	// recursive word finding algorithm
-	void findWordsUtil(BoggleBoard b, boolean visited[][], int i, int j, String str, Dictionary d) {
+	void findWords(BoggleBoard b, boolean visited[][], int i, int j, String str, Dictionary d) {
 		int rows = b.rows(), cols = b.cols();
 
-		// mark current cell as visited and add current character to str
+		// mark current cell as visited and add current character(s) to str
 		visited[i][j] = true;
 		str += b.getLetter(i, j);
 
 		// add current string if it meets criteria
-		if (str.length() > 2 && d.doesExist(str)) {
-			this.set.add(str);
+		String strFixQ = str.replace("Q", "QU");
+		if (str.length() > 2 && d.doesExist(strFixQ)) {
+			this.set.add(strFixQ);
 		}
 
 		// check 8 neighboring squares of boggle[i][j]
 		for (int row = (i - 1); row <= (i + 1) && row < rows; row++) {
 			for (int col = (j - 1); col <= (j + 1) && col < cols; col++) {
 				if (row >= 0 && col >= 0 && !visited[row][col]) {
-					findWordsUtil(b, visited, row, col, str, d);
+					findWords(b, visited, row, col, str, d);
 				}
 			}
 		}
 
-		// remove current character from string and mark current cell's visited to false
+		// remove current character(s) from string and mark current cell's visited to false
+
 		str = "" + str.charAt(str.length() - 1);
+
 		visited[i][j] = false;
 	}
 
 	// finds all words present in dictionary (helper method)
-	void findWords(BoggleBoard b, Dictionary d) {
+	void findWordsHelper(BoggleBoard b, Dictionary d) {
 
 		int rows = b.rows(), cols = b.cols();
 		// mark all characters not visited
 		boolean visited[][] = new boolean[b.rows()][b.cols()];
 		String str = "";
 
-		// go over every character in board,
-		// then look for all words starting with this character
+		// go over every character/char sequence in board,
+		// then look for all words starting with this character/sequence
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				findWordsUtil(b, visited, i, j, str, d);
+				findWords(b, visited, i, j, str, d);
 			}
 		}
 	}

@@ -10,9 +10,6 @@ public class Tour {
 		}
 
 		public Node(Point p, Node next) {
-			if (next == null) {
-				throw new IllegalArgumentException("Given node is null! stop it");
-			}
 			this.p = p;
 			this.next = next;
 		}
@@ -48,22 +45,21 @@ public class Tour {
 
 	/** print tour (one point per line) to std output */
 	public void show() {
-		System.out.println("printing");
-		Node cur = this.head;
-		while (cur.next != null && cur.next != cur) {
-			System.out.println(cur.toString());
-			cur = cur.next;
+		Node current = this.head;
+		while (current.next != null && current.next != current && current.next != this.head) { // last condition prevents circular loop
+			System.out.println(current.toString());
+			current = current.next;
 		}
 	}
 
 	/** draw the tour using StdDraw */
 	public void draw() {
 		Node current = this.head;
-
-		while (current != current.next && current != null && current.next != this.head) {// prevent circular
+		while (current.next != null && current.next != current && current.next != this.head) { // last condition prevents circular loop
 			current.p.drawTo(current.next.p);
 			current = current.next;
 		}
+		current.p.drawTo(current.next.p); //accounts for loop back to head node
 	}
 
 	/** return number of nodes in the tour */
@@ -95,52 +91,18 @@ public class Tour {
 		throw new IndexOutOfBoundsException();
 	}
 
-	public void insert(Point p, int idx) {
-		if (/* idx != 0 && */idx > this.size - 1) {
-			throw new IndexOutOfBoundsException();
-		}
-
-		// if (this.head == null) { // may never happen
-		// 	this.head = new Node(p, this.head);
-		// 	return;
-		// }
-
-		//TODO broken
-
-		if (idx == 0) {
-			Node tempOld = this.head;
-			this.head = new Node(p, tempOld);
-			return;
-		}
-
-		// if (idx == 1) {
-		// 	Node tempOld = this.head.next;
-		// 	this.head.next = new Node(p, tempOld);
-		// 	return;
-		// }
-
+	public void insert(Point p, int index) {
+		Node in = new Node(p, null); //null for now but will be assigned later in the method
 		Node current = this.head;
-		int index = 0;
-
-		//bad bad bad
-		while (current != current.next && current != null) {// prevent reiteration
-			System.out.println("current index: "+index+" goal index: "+idx+" size: "+size);
-			if (index == idx) {//index correct, set node
-				Node oldNext = current.next;
-				current = new Node(p, oldNext);
-				// return;
+ 
+			// going to the goal index or "last" element in the list
+			for (int i = 0; i < index && (current.next != this.head && current.next != null); i++) {
+				current = current.next;
 			}
-			index++;
-			current = current.next;
-		}
-
-		if (index == idx) {//index correct, set node
-			Node oldNext = current.next;
-			current = new Node(p, oldNext);
-			// return;
-		}
-
-	}
+ 
+		in.next = current.next;
+ 		current.next = in;
+ 	}
 
 	/**
 	 * return the total distance "traveled", from start to all nodes and back to start
@@ -149,10 +111,11 @@ public class Tour {
 		Node current = this.head;
 		double out = 0.0;
 
-		while (current != current.next && current != null && current.next != this.head) {// prevent circular
+		while (current.next != null && current.next != current && current.next != this.head) { // last condition prevents circular loop
 			out += current.p.distanceTo(current.next.p);
 			current = current.next;
 		}
+		out += current.p.distanceTo(current.next.p); //accounts for loop back to head node
 
 		return out;
 	}
@@ -202,8 +165,6 @@ public class Tour {
 			return;
 		}
 
-		// System.out.println(this);
-
 		double smallestIncrease = Double.POSITIVE_INFINITY;
 		int idx = 0;
 		double distOrig, distNew;
@@ -234,7 +195,43 @@ public class Tour {
 		this.size++;
 	}
 
-	// TODO third heuristic
+	//third heuristic - makes a cool visual, not very practical
+	public void thirdHeuristic(Point p) {
 
-	// find "concentric" algorithm that favors points farthest away from center, small modification to insertNearest
+		if (this.size == 0) {
+			this.size = 1;
+			this.head = new Node(p);
+			return;
+		}
+
+		double greatestIncrease = Double.NEGATIVE_INFINITY;
+		int idx = 0;
+		double distOrig, distNew;
+
+		//when this calls get(size-1), speed could be improved greatly by storing a tail node
+
+		for (int i = 1; i < this.size; i++) {
+			distOrig = this.get(i).getPoint().distanceTo(this.get(i - 1).getPoint());// distance from A to B
+			distNew = p.distanceTo(this.get(i).getPoint()) + p.distanceTo(this.get(i - 1).getPoint());// distance from A
+																										// to P to B
+			if (distNew - distOrig >= greatestIncrease) {
+				greatestIncrease = distNew - distOrig;
+				idx = i - 1;
+			}
+		}
+		distOrig = this.head.getPoint().distanceTo(this.get(this.size - 1).getPoint());// distance from first to last
+		distNew = p.distanceTo(this.head.getPoint()) + p.distanceTo(this.get(this.size - 1).getPoint());// distance
+																											// from
+																											// first
+																											// to P to
+																											// last
+		if (distNew - distOrig >= greatestIncrease) {
+			greatestIncrease = distNew - distOrig;
+			idx = this.size - 1;
+		}
+
+		this.insert(p, idx);// adding the point
+		this.size++;
+	}
+
 }

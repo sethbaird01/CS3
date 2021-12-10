@@ -22,7 +22,7 @@ public class SmallestInsertion
 	public static void main(String[] args) 
     {
     	Scanner in = null;
-    	
+    	//TODO gave it 45 minutes for mona
     	try {
     		in = new Scanner(new File("data/tsp1000.txt")); //change to test other files
     	}

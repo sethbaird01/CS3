@@ -17,14 +17,13 @@ import java.util.Scanner;
  *
  *************************************************************************/
 
-public class NearestInsertion 
+public class ThirdHeuristic 
 {
 	public static void main(String[] args) 
     {
     	Scanner in = null;
     	
     	try {
-            //TODO i waited 20 minutes
     		in = new Scanner(new File("data/tsp1000.txt")); //change to test other files
     	}
     	catch (IOException ex) {}
@@ -44,7 +43,7 @@ public class NearestInsertion
             double x = in.nextDouble();
             double y = in.nextDouble();
             Point p = new Point(x, y);
-            tour.insertNearest(p);
+            tour.thirdHeuristic(p);
 
             /*
              * uncomment the 4 lines below to animate

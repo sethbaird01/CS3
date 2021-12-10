@@ -4,23 +4,26 @@ public class Tour {
 		Point p;
 		Node next;
 
-		public Node() {
-			this.p = null;
-			this.next = null;
-		}
-
 		public Node(Point p) {
 			this.p = p;
-			this.next = null;
+			this.next = this; // circularity
 		}
 
 		public Node(Point p, Node next) {
+			if (next == null) {
+				throw new IllegalArgumentException("Given node is null! stop it");
+			}
 			this.p = p;
 			this.next = next;
 		}
 
 		public Point getPoint() {
 			return this.p;
+		}
+
+		@Override
+		public String toString() {
+			return p.toString();
 		}
 	}
 
@@ -29,8 +32,11 @@ public class Tour {
 
 	/** create an empty tour */
 	public Tour() {
-		this.head = new Node();
-		this.size = 0;
+		// this.head = new Node();
+		// this.head.next = this.head;
+		// this.size = 0;
+
+		// these don't need initializing because it is done in the heuristic methods
 	}
 
 	/** create a four-point tour, for debugging */
@@ -42,6 +48,7 @@ public class Tour {
 
 	/** print tour (one point per line) to std output */
 	public void show() {
+		System.out.println("printing");
 		Node cur = this.head;
 		while (cur.next != null && cur.next != cur) {
 			System.out.println(cur.toString());
@@ -51,10 +58,11 @@ public class Tour {
 
 	/** draw the tour using StdDraw */
 	public void draw() {
-		Node cur = this.head;
-		while (cur.next != null && cur.next != cur) {
-			cur.p.draw();
-			cur = cur.next;
+		Node current = this.head;
+
+		while (current != current.next && current != null && current.next != this.head) {// prevent circular
+			current.p.drawTo(current.next.p);
+			current = current.next;
 		}
 	}
 
@@ -64,13 +72,16 @@ public class Tour {
 	}
 
 	public Node get(int i) {// copied from MyLinkedList lab
-		System.out.println("getting element from index " + i + ". size of list: " + this.size);
 		int index = 0;
-		if (this.head == null) {
+		if (this.head == null || this.size == 0 || (i > 0 && this.head == this.head.next)) {
 			throw new IndexOutOfBoundsException();
 		} else {
 			Node current = this.head;
-			while (current.next != null && current.next != current) {
+			while (current.next != this.head /* circularity checker */ && index < size) {// stops when either the list
+																							// loops too far (past the
+																							// circular list's "end")
+																							// found by comparing next
+																							// element to "first" element
 				if (index == i) {
 					return current;
 				}
@@ -84,122 +95,146 @@ public class Tour {
 		throw new IndexOutOfBoundsException();
 	}
 
-	public void insert(Point p, int idx) {// copied from MyLinkedList lab
-		System.out.println("adding element to index " + idx);
-		if (idx != 0 && idx > this.size - 1) {
+	public void insert(Point p, int idx) {
+		if (/* idx != 0 && */idx > this.size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
-		this.size++;
 
-		if (this.head == null) {
-			this.head = new Node(p);
+		// if (this.head == null) { // may never happen
+		// 	this.head = new Node(p, this.head);
+		// 	return;
+		// }
+
+		//TODO broken
+
+		if (idx == 0) {
+			Node tempOld = this.head;
+			this.head = new Node(p, tempOld);
 			return;
 		}
 
-		int index = 0;
+		// if (idx == 1) {
+		// 	Node tempOld = this.head.next;
+		// 	this.head.next = new Node(p, tempOld);
+		// 	return;
+		// }
+
 		Node current = this.head;
-		while (current.next != null && current.next != current) { // stops when
-			if (index + 1 == idx) {
-				Node n = current.next;
-				current.next = new Node(p);
-				current.next.next = n;
+		int index = 0;
+
+		//bad bad bad
+		while (current != current.next && current != null) {// prevent reiteration
+			System.out.println("current index: "+index+" goal index: "+idx+" size: "+size);
+			if (index == idx) {//index correct, set node
+				Node oldNext = current.next;
+				current = new Node(p, oldNext);
+				// return;
 			}
-			current = current.next;
 			index++;
+			current = current.next;
 		}
-		if (index == idx) {
-			Node n = current.next;
-			current = new Node(p);
-			current.next = n;
+
+		if (index == idx) {//index correct, set node
+			Node oldNext = current.next;
+			current = new Node(p, oldNext);
+			// return;
 		}
 
 	}
 
 	/**
-	 * return the total distance "traveled", from start to all nodes and back to
-	 * start
+	 * return the total distance "traveled", from start to all nodes and back to start
 	 */
 	public double distance() {
-		Node cur = this.head;
+		Node current = this.head;
 		double out = 0.0;
-		while (cur.next != null && cur.next != cur) {
-			out += cur.p.distanceTo(cur.next.p);
-			cur = cur.next;
+
+		while (current != current.next && current != null && current.next != this.head) {// prevent circular
+			out += current.p.distanceTo(current.next.p);
+			current = current.next;
 		}
-		return 0.0;
+
+		return out;
 	}
 
-	public String toString() { // tested working
+	public String toString() { // copied with modifications from MyLinkedList lab
+
 		String out = "[";
 		Node current = this.head;
-		while (current != null) {
+
+		while (current != current.next && current != null) {// prevent circular
 			out += current.p + ", ";
 			current = current.next;
 		}
+
 		out += "]";
 		return out.replace(", ]", "]");
 	}
 
 	/** insert p using nearest neighbor heuristic */
 	public void insertNearest(Point p) {
-		System.out.println(this);
 		if (this.size == 0) {
 			this.size = 1;
-			head = new Node(p);
+			this.head = new Node(p);
 			return;
 		}
 
 		double dist = Double.POSITIVE_INFINITY;
-		int nearest = 0;
+		int nearest = 0; // the index of nearest point
 
 		for (int i = 0; i < this.size; i++) {
 			if (this.get(i).getPoint().distanceTo(p) < dist) {
-				dist = this.get(i).getPoint().distanceTo(p);// keeps track of smallest distance
-				nearest = i;
+				dist = this.get(i).getPoint().distanceTo(p);// stores smallest distance
+				nearest = i;// index of point with smallest distance
 			}
 		}
 
 		this.insert(p, nearest);// adding the point
-
 		this.size++;
 	}
 
 	/** insert p using smallest increase heuristic */
 	public void insertSmallest(Point p) {
-		System.out.println(this);
 
 		if (this.size == 0) {
 			this.size = 1;
-			head = new Node(p);
+			this.head = new Node(p);
 			return;
 		}
+
+		// System.out.println(this);
 
 		double smallestIncrease = Double.POSITIVE_INFINITY;
 		int idx = 0;
 		double distOrig, distNew;
+
+		//when this calls get(size-1), speed could be improved greatly by storing a tail node
+
 		for (int i = 1; i < this.size; i++) {
 			distOrig = this.get(i).getPoint().distanceTo(this.get(i - 1).getPoint());// distance from A to B
 			distNew = p.distanceTo(this.get(i).getPoint()) + p.distanceTo(this.get(i - 1).getPoint());// distance from A
-																										// to
-																										// P to B
+																										// to P to B
 			if (distNew - distOrig <= smallestIncrease) {
 				smallestIncrease = distNew - distOrig;
 				idx = i - 1;
 			}
 		}
-		distOrig = this.get(0).getPoint().distanceTo(this.get(this.size - 1).getPoint());// distance from first to last
-		distNew = p.distanceTo(this.get(0).getPoint()) + p.distanceTo(this.get(this.size - 1).getPoint());// distance
+		distOrig = this.head.getPoint().distanceTo(this.get(this.size - 1).getPoint());// distance from first to last
+		distNew = p.distanceTo(this.head.getPoint()) + p.distanceTo(this.get(this.size - 1).getPoint());// distance
 																											// from
 																											// first
-		// to P to last
+																											// to P to
+																											// last
 		if (distNew - distOrig <= smallestIncrease) {
 			smallestIncrease = distNew - distOrig;
 			idx = this.size - 1;
 		}
 
-		this.insert(p, idx);
+		this.insert(p, idx);// adding the point
 		this.size++;
 	}
 
 	// TODO third heuristic
+
+	// find "concentric" algorithm that favors points farthest away from center, small modification to insertNearest
 }

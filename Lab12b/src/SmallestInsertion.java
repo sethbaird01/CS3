@@ -61,8 +61,9 @@ public class SmallestInsertion
         StdDraw.show();
         
         // print tour to standard output
+        tour.show();
+
         System.out.printf("Tour distance =  %.4f\n", tour.distance());
         System.out.printf("Number of points = %d\n", tour.size());
-        tour.show();
     }
 }

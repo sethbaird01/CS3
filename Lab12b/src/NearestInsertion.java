@@ -24,7 +24,8 @@ public class NearestInsertion
     	Scanner in = null;
     	
     	try {
-    		in = new Scanner(new File("tsp1000.txt")); //change to test other files
+            //TODO
+    		in = new Scanner(new File("data/tsp1000.txt")); //change to test other files
     	}
     	catch (IOException ex) {}
     	

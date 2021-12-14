@@ -694,7 +694,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * Draw picture (gif, jpg, or png) centered on (x, y).
      * @param x the center x-coordinate of the image
      * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
+     * @param s the name of the image/picture, e.g., "assets/ball.gif"
      * @throws IllegalArgumentException if the image is corrupt
      */
     public static void picture(double x, double y, String s) {
@@ -714,7 +714,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * rotated given number of degrees
      * @param x the center x-coordinate of the image
      * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
+     * @param s the name of the image/picture, e.g., "assets/ball.gif"
      * @param degrees is the number of degrees to rotate counterclockwise
      * @throws IllegalArgumentException if the image is corrupt
      */
@@ -737,7 +737,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * Draw picture (gif, jpg, or png) centered on (x, y), rescaled to w-by-h.
      * @param x the center x coordinate of the image
      * @param y the center y coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
+     * @param s the name of the image/picture, e.g., "assets/ball.gif"
      * @param w the width of the image
      * @param h the height of the image
      * @throws IllegalArgumentException if the width height are negative
@@ -768,7 +768,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * given number of degrees, rescaled to w-by-h.
      * @param x the center x-coordinate of the image
      * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
+     * @param s the name of the image/picture, e.g., "assets/ball.gif"
      * @param w the width of the image
      * @param h the height of the image
      * @param degrees is the number of degrees to rotate counterclockwise

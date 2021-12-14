@@ -69,10 +69,10 @@ public class Monster implements Runnable
 		double drawY = (y + 0.5) * Tile.SIZE;
 		switch (type)
 		{
-		case SKELETON:	StdDraw.picture(drawX, drawY, "skeleton.gif"); 	break;
-		case ORC:		StdDraw.picture(drawX, drawY, "orc.gif"); 		break;
-		case BAT:		StdDraw.picture(drawX, drawY, "bat.gif");     	break;
-		case SLIME:		StdDraw.picture(drawX, drawY, "slime.gif"); 	break;
+		case SKELETON:	StdDraw.picture(drawX, drawY, "assets/skeleton.gif"); 	break;
+		case ORC:		StdDraw.picture(drawX, drawY, "assets/orc.gif"); 		break;
+		case BAT:		StdDraw.picture(drawX, drawY, "assets/bat.gif");     	break;
+		case SLIME:		StdDraw.picture(drawX, drawY, "assets/slime.gif"); 	break;
 		default: 														break;
 		}
 

@@ -148,19 +148,19 @@ public class Tile
 		{
 			switch (type)
 			{
-				case FLOOR:		StdDraw.picture(drawX, drawY, "brickfloor.gif"); 	break;
-				case LAVA:		StdDraw.picture(drawX, drawY, "lava.gif"); 			break;
-				case WATER:		StdDraw.picture(drawX, drawY, "water.gif");     	break;
-				case GRASS:		StdDraw.picture(drawX, drawY, "grasslands.gif"); 	break;
-				case FOREST:	StdDraw.picture(drawX, drawY, "forest.gif");    	break;
-				case MOUNTAIN:	StdDraw.picture(drawX, drawY, "mountains.gif"); 	break;
-				case WALL:		StdDraw.picture(drawX, drawY, "stonewall.gif"); 	break;
+				case FLOOR:		StdDraw.picture(drawX, drawY, "assets/brickfloor.gif"); 	break;
+				case LAVA:		StdDraw.picture(drawX, drawY, "assets/lava.gif"); 			break;
+				case WATER:		StdDraw.picture(drawX, drawY, "assets/water.gif");     	break;
+				case GRASS:		StdDraw.picture(drawX, drawY, "assets/grasslands.gif"); 	break;
+				case FOREST:	StdDraw.picture(drawX, drawY, "assets/forest.gif");    	break;
+				case MOUNTAIN:	StdDraw.picture(drawX, drawY, "assets/mountains.gif"); 	break;
+				case WALL:		StdDraw.picture(drawX, drawY, "assets/stonewall.gif"); 	break;
 			    default:                                            				break;										
 			}			
 		}
 		else
 		{
-			StdDraw.picture(drawX, drawY, "blank.gif"); 	
+			StdDraw.picture(drawX, drawY, "assets/blank.gif"); 	
 		}
 	}
 	

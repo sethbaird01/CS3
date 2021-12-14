@@ -113,7 +113,7 @@ public class Avatar
 	{
 		double drawX = (x + 0.5) * Tile.SIZE;
 		double drawY = (y + 0.5) * Tile.SIZE;
-		StdDraw.picture(drawX, drawY, "avatar.gif");
+		StdDraw.picture(drawX, drawY, "assets/avatar.gif");
 		if ((timer != null) && (timer.elapsedTime() < World.DISPLAY_DAMAGE_SEC))
 		{
 			StdDraw.setPenColor(StdDraw.YELLOW);

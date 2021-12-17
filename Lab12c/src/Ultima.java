@@ -12,7 +12,7 @@ public class Ultima
 	 */
 	public static void main(String [] args)
 	{
-		final String level = "30x20.txt"; //change level file here
+		final String level = "assets/30x20.txt"; //change level file here
 		
 //		if (args.length <= 0)
 //		{

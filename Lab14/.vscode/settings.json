@@ -1,4 +1,9 @@
 {
     "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin"
+    "java.project.outputPath": "bin",
+    "maven.view": "flat",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:\\Users\\orbit\\Documents\\GitHub\\CS3\\Lab14\\lib\\junit-4.12.jar"
+    ]
 }

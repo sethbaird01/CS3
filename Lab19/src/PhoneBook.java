@@ -114,7 +114,7 @@ public class PhoneBook implements IMap {
 
     private static int hash(Person in) {
         // returns hashed index
-        return in.encode() % BACKING_ARR_SIZE;
+        return in.hashCode() % BACKING_ARR_SIZE;
     }
 
     @Override

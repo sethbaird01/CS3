@@ -9,7 +9,8 @@ public class Person {
         this.name = firstName + lastName;
     }
 
-    public int encode() {
+    @Override
+    public int hashCode() {
         // max number of characters final encoded int can be
         final int MAX_INT_LEN = (Integer.MAX_VALUE + "").length() - 1;
         // since MAX_VALUE is 2147483647, max len would be 9 characters
@@ -47,12 +48,6 @@ public class Person {
         // System.out.println("encode "+this.name+" --> "+out);
         return Integer.valueOf(out);
     }
-
-    // @Override
-    // public int hashCode() {
-    //     // TODO Auto-generated method stub
-    //     return super.hashCode();
-    // }
 
     @Override
     public boolean equals(Object obj) {

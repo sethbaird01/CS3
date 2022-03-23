@@ -1,5 +1,7 @@
 public interface IMap 
+
 {
+
 	/**
 	 * Add the key/value pair to the table
 	 * @return the number previously associated with person, or null
@@ -21,4 +23,5 @@ public interface IMap
 	 * @return value mapped to supplied person, or null
 	 */
 	PhoneNumber remove(Person person);
+
 }

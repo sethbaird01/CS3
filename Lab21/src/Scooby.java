@@ -63,7 +63,7 @@ public class Scooby {
     }
 
     // checks if new connection (AB) is present in two connection strings,
-    // combines if necessary ro returns false if not.
+    // combines if necessary or returns false if not.
     static boolean consolidationCheck(Character a, Character b, ArrayList<String> connections) {
         int foundA = connIndex(a, connections);
         int foundB = connIndex(b, connections);
